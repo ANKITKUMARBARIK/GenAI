@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ByteShaala Chat</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
+            background-attachment: fixed;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(107, 70, 193, 0.1);
+        }
+
+        .bs-purple {
+            color: #6B46C1;
+            text-shadow: 0 0 5px rgba(107, 70, 193, 0.5);
+        }
+
+        .bs-green {
+            color: #00D68F;
+            text-shadow: 0 0 5px rgba(0, 214, 143, 0.5);
+        }
+
+        .message-user {
+            background: linear-gradient(135deg, #00D68F22, #6B46C122);
+            border-left: 3px solid #00D68F;
+        }
+
+        .message-ai {
+            background: linear-gradient(135deg, #6B46C622, #00D68F22);
+            border-left: 3px solid #6B46C1;
+        }
+
+        .typing-dots {
+            display: inline-flex;
+            gap: 4px;
+        }
+
+        .typing-dots span {
+            width: 6px;
+            height: 6px;
+            background: #00D68F;
+            border-radius: 50%;
+            animation: typing 1.4s infinite ease-in-out;
+        }
+
+        .typing-dots span:nth-child(1) {
+            animation-delay: -0.32s;
+        }
+
+        .typing-dots span:nth-child(2) {
+            animation-delay: -0.16s;
+        }
+
+        @keyframes typing {
+
+            0%,
+            80%,
+            100% {
+                transform: scale(0.8);
+                opacity: 0.5;
+            }
+
+            40% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .send-btn {
+            background: linear-gradient(45deg, #00D68F, #6B46C1);
+            transition: all 0.3s ease;
+        }
+
+        .send-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 214, 143, 0.3);
+        }
+
+        .chat-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .chat-scroll::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .chat-scroll::-webkit-scrollbar-thumb {
+            background: linear-gradient(45deg, #00D68F, #6B46C1);
+            border-radius: 2px;
+        }
+
+        .floating-particle {
+            position: fixed;
+            width: 2px;
+            height: 2px;
+            background: #00D68F;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: float 8s linear infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) translateX(0) scale(0);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+                transform: translateY(90vh) translateX(10px) scale(1);
+            }
+
+            90% {
+                opacity: 1;
+                transform: translateY(10vh) translateX(-10px) scale(1);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(0) translateX(0) scale(0);
+            }
+        }
+    </style>
+</head>
+
+<body class="text-gray-100 min-h-screen">
+    <!-- Floating particles -->
+    <div id="particles"></div>
+
+    <!-- Header -->
+    <div class="fixed top-0 left-0 right-0 z-50 glass">
+        <div class="max-w-4xl mx-auto px-4 py-3">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div
+                        class="w-8 h-8 bg-gradient-to-r from-[#00D68F] to-[#6B46C1] rounded-full flex items-center justify-center">
+                        🤖
+                    </div>
+                    <span class="font-semibold bs-purple">ByteShaala Chat</span>
+                </div>
+                <div class="flex items-center space-x-2 text-sm">
+                    <div class="w-2 h-2 bg-[#00D68F] rounded-full animate-pulse"></div>
+                    <span class="text-gray-400">Online</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chat Container -->
+    <div class="max-w-4xl mx-auto px-4 pt-20 pb-32">
+        <div class="chat-scroll" id="chat-container" style="height: calc(100vh - 200px); overflow-y: auto;">
+            <!-- Welcome -->
+            <div class="text-center py-16">
+                <div class="inline-block glass p-6 rounded-xl">
+                    <div class="text-3xl mb-4 bs-green">👋</div>
+                    <h2 class="text-2xl font-semibold mb-2 bs-purple">Welcome to ByteShaala Chat</h2>
+                    <p class="text-gray-400">Ask about users, courses, or anything else!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Input Area -->
+    <div class="fixed bottom-0 left-0 right-0 z-50">
+        <div class="max-w-4xl mx-auto p-4">
+            <div class="glass rounded-xl p-4">
+                <div class="flex items-end space-x-3">
+                    <textarea id="input"
+                        class="flex-1 bg-transparent text-gray-100 placeholder-gray-500 outline-none resize-none p-3 rounded-lg glass"
+                        placeholder="Type your message..." rows="1" style="max-height: 120px;"></textarea>
+                    <button id="ask" class="send-btn text-white px-6 py-3 rounded-lg font-medium">
+                        Send
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>

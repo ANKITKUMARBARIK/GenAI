@@ -1,0 +1,21 @@
+{
+  "name": "07_chatbot_backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@tavily/core": "^0.5.11",
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "express": "^5.1.0",
+    "groq-sdk": "^0.30.0",
+    "node-cache": "^5.1.2"
+  }
+}
