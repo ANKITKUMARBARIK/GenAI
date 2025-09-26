@@ -1,0 +1,19 @@
+{
+  "name": "10_build_web_ai",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.2",
+    "groq-sdk": "^0.32.0",
+    "readline-sync": "^1.4.10",
+    "slugify": "^1.6.6"
+  }
+}
