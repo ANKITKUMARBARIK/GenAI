@@ -1,0 +1,27 @@
+{
+  "name": "12_testing_rag_agent",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "lmsChatbot.js",
+  "scripts": {
+    "dev": "node index.js",
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@langchain/core": "^0.3.77",
+    "@langchain/google-genai": "^0.2.18",
+    "@langchain/pinecone": "^0.2.0",
+    "@langchain/textsplitters": "^0.1.0",
+    "@pinecone-database/pinecone": "^6.1.2",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.2",
+    "express": "^5.1.0",
+    "grok-sdk": "^0.0.1-security",
+    "groq-sdk": "^0.33.0",
+    "mongodb": "^6.20.0"
+  }
+}
